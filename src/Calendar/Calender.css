@@ -1,0 +1,36 @@
+
+.calendar-wrapper{
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid black;
+}
+.calendar-month-year{
+    display: grid;
+    background-color: #A34828;
+    justify-content: center;
+    padding: 1rem 0 1rem 0;
+    font-weight: bold;
+    grid-template-columns: 60px 60px;
+}
+.calendar-days{
+    display: grid;
+    background-color: white;
+    grid-template-columns: repeat(7, 60px);
+}
+.calender-date{
+    display: grid;
+    background-color: white;
+    grid-template-columns: repeat(7, 60px);
+    padding: 0.3rem;
+}
+.calendar-selectedDate{
+    background-color: blue;
+    color:white;
+    font-weight: bold;
+    
+    
+}
+.calendar-Dates:hover{
+    background-color: aqua;
+    transition: ease 0.8s;
+}
