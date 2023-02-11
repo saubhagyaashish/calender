@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './App.css';
 import Calendar from './Calendar/Calendar';
 
@@ -8,7 +8,7 @@ function App() {
   const [YYYY, setYYYY] = useState (currentDate.slice(0,4))
   const [MM,setMM] = useState(currentDate.slice(5,7))
   const [DD, setDD] = useState(currentDate.slice(8))
-
+  
   const checkInputValidity =()=>{
     if(YYYY>= 2300 || YYYY < 1700){
       alert("YYYY must be between 1700 to 2300")

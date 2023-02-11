@@ -8,6 +8,7 @@
     display: grid;
     background-color: #A34828;
     justify-content: center;
+    gap: 1rem;
     padding: 1rem 0 1rem 0;
     font-weight: bold;
     grid-template-columns: 60px 60px;

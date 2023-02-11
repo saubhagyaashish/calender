@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { weeks, months, monthCodeList, checkLeapYear } from './helper';
+import { weeks, months, monthCodeList, checkLeapYear, monthWith31 } from './helper';
 import './Calender.css'
 
 
 const Calendar = ({ date }) => {
+    const calenderDate = date.split("-");
+    const [YYYY,MM,DD] = calenderDate
+    const [dateArray, setDateArray] = useState(Array.from({ length: 30 }, (_, i) => i + 1))
+    let selectedMonth= (months[(MM - 1)]) ;
     
-    const [dateArray, setDateArray] = useState(Array.from({ length: 31 }, (_, i) => i + 1))
-    let selectedMonth= (months[(date.slice(5, 7) - 1)]) ;
+    
 
-    const YY = (date.slice(2, 4) - 0);
+    const YY = (YYYY.slice(2) - 0);
     const monthCode = () => {
-        let MM = (date.slice(5, 7) - 0);
         return monthCodeList[months[MM - 1]]
 
     }
@@ -22,7 +24,7 @@ const Calendar = ({ date }) => {
         return Math.floor(YYCode);
     }
     const centuryCode = () => {
-        let centuryYear = (date.slice(0, 4)) - 0;
+        let centuryYear = (YYYY) - 0;
 
         if (centuryYear >= 1700 && centuryYear < 1800) {
             return 4;
@@ -46,9 +48,10 @@ const Calendar = ({ date }) => {
         return 0;
 
     }
-    const checkMonthFeb = () => {
+    const countMonthDate = () => {
+        
         if (selectedMonth === "February") {
-            let leapYearValue = checkLeapYear(date.slice(0, 4));
+            let leapYearValue = checkLeapYear(YYYY);
             if (leapYearValue === 1) {
                 return (Array.from({ length: 29 }, (_, i) => i + 1))
             }
@@ -56,14 +59,20 @@ const Calendar = ({ date }) => {
                 return (Array.from({ length: 28 }, (_, i) => i + 1))
             }
         }
-        return dateArray;
+        else if(monthWith31[selectedMonth]){
+            return Array.from({ length: 31 }, (_, i) => i + 1)
+        }
+        else{
+            return Array.from({ length: 30 }, (_, i) => i + 1)
+        }
+        
     }
 
     const getWeekBasedOnDate = () => {
-        let res = (yearCode() + monthCode() + centuryCode() + 1 - checkLeapYear(date.slice(0, 4))) % 7;
+        let res = (yearCode() + monthCode() + centuryCode() + 1 - checkLeapYear(YYYY)) % 7;
         let spaceArray = Array.from({ length: res }, (_, i) => " ");
-        checkMonthFeb()
-        setDateArray([...spaceArray, ...(checkMonthFeb())]);
+        countMonthDate()
+        setDateArray([...spaceArray, ...(countMonthDate())]);
         return res;
 
     }
@@ -82,7 +91,7 @@ const Calendar = ({ date }) => {
         <div className='calendar-wrapper'>
             <div className='calendar-month-year'>
                 <div className='month'>{selectedMonth}</div>
-                <div className='year'>{date.slice(0, 4)}</div>
+                <div className='year'>{YYYY}</div>
             </div>
             
             <div className='calendar-days'>
@@ -96,7 +105,7 @@ const Calendar = ({ date }) => {
                     dateArray.map((i, e) => {
                         return (
 
-                            i === (date.slice(8) - 0) ? <div key={e} className='calendar-selectedDate'>{i}</div> : i === " " ? <div key={e}>{i}</div> : <div key={e} className='calendar-Dates'>{i}</div>
+                            i === (DD - 0) ? <div key={e} className='calendar-selectedDate'>{i}</div> : i === " " ? <div key={e}>{i}</div> : <div key={e} className='calendar-Dates'>{i}</div>
                         )
                     })
                 }
