@@ -49,7 +49,7 @@ const Calendar = ({ date }) => {
     const checkMonthFeb = () => {
         if (selectedMonth === "February") {
             let leapYearValue = checkLeapYear(date.slice(0, 4));
-            if (leapYearValue == 1) {
+            if (leapYearValue === 1) {
                 return (Array.from({ length: 29 }, (_, i) => i + 1))
             }
             else {
@@ -70,13 +70,10 @@ const Calendar = ({ date }) => {
 
 
     useEffect(() => {
-
         getWeekBasedOnDate()
-
     }, [])
     useEffect(() => {
         getWeekBasedOnDate()
-
     }, [date])
 
     return (
